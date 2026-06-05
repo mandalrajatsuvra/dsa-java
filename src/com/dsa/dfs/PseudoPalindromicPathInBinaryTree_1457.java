@@ -13,7 +13,6 @@ public class PseudoPalindromicPathInBinaryTree_1457 {
             this.right = right;
         }
     }
-
     public void dfs(TreeNode root, int [] freq, int [] res){
         if(root == null) return;
         freq[root.val]++;
@@ -26,7 +25,6 @@ public class PseudoPalindromicPathInBinaryTree_1457 {
         dfs(root.right, freq, res);
         freq[root.val]--;
     }
-
     private boolean isPseudoPalindrome(int[] freq) {
         int odd = 0;
         int even = 0;
@@ -39,8 +37,6 @@ public class PseudoPalindromicPathInBinaryTree_1457 {
         }
         return odd <= 1;
     }
-
-
     public int pseudoPalindromicPaths (TreeNode root) {
         int res [] = new int[] {0};
         dfs(root,new int[10], res);
@@ -55,6 +51,5 @@ public class PseudoPalindromicPathInBinaryTree_1457 {
         root.right.right = new TreeNode(1);
         PseudoPalindromicPathInBinaryTree_1457 ps = new PseudoPalindromicPathInBinaryTree_1457();
         System.out.println( ps.pseudoPalindromicPaths(root));
-
     }
 }
