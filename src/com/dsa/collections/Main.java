@@ -44,8 +44,8 @@ public class Main {
         System.out.println(treeSet.pollFirst());
         System.out.println(treeSet);
 
-
-
+        long l = (long) Math.pow(Integer.MAX_VALUE, 2);
+        System.out.println(l);
 
 
     }
