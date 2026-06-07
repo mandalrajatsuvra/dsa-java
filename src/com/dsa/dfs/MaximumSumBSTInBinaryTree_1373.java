@@ -1,7 +1,7 @@
 package com.dsa.dfs;
 
 public class MaximumSumBSTInBinaryTree_1373 {
-    // Wrong ans have to work on it
+    // Correct answer
 
     public static class TreeNode{
         int val;
@@ -16,45 +16,43 @@ public class MaximumSumBSTInBinaryTree_1373 {
         }
     }
 
-    public static class NodeWithInformation{
+    public static class Node{
         boolean isBst;
         int sum;
-        TreeNode root;
-        public NodeWithInformation(boolean isBst, int sum, TreeNode root) {
+        Integer min;
+        Integer max;
+        public Node(boolean isBst, int sum, Integer min, Integer max) {
             this.isBst = isBst;
             this.sum = sum;
-            this.root = root;
+            this.min = min;
+            this.max = max;
         }
     }
 
-    public NodeWithInformation dfs(TreeNode root, TreeNode parent, int []maxSum){
+    public Node dfs(TreeNode root, int []maxSum){
         if(root == null){
-            return new NodeWithInformation(true,0, new TreeNode(parent.left == root ? Integer.MIN_VALUE : Integer.MAX_VALUE));
-        }
-        if(root.left == null && root.right == null){
-            return new NodeWithInformation(true, root.val, root);
+            return new Node(true, 0, null, null);
         }
 
-        NodeWithInformation left = dfs(root.left, root, maxSum);
-        NodeWithInformation right = dfs(root.right, root, maxSum);
+        Node left = dfs(root.left, maxSum);
+        Node right = dfs(root.right, maxSum);
 
-        int sum = 0;
-        boolean isBst = false;
-        if(left.isBst && right.isBst){
-            if(root.val > left.root.val && root.val < right.root.val){
-                sum += left.sum;
-                sum += right.sum;
-                sum += root.val == Integer.MAX_VALUE || root.val == Integer.MIN_VALUE  ? 0 : root.val ;
-                isBst = true;
-            }
+        boolean isRootBst = left.isBst && right.isBst
+                &&  (right.min == null ||  root.val < right.min)
+                &&  (right.max == null ||  root.val > left.max);
+        int sumWithRoot = left.sum + right.sum + root.val;
+        Integer maxWithRoot = Math.min(root.val, right.min == null ? root.val: right.min);
+        Integer minWithRoot = Math.max(root.val, left.max  == null ? root.val: left.max);
+        if(isRootBst){
+            maxSum[0]= Math.max(maxSum[0], sumWithRoot);
         }
-        maxSum[0] = Math.max(maxSum[0], sum);
-        return new NodeWithInformation(isBst, sum, root);
+        Node node = new Node(isRootBst, sumWithRoot, minWithRoot, maxWithRoot);
+        return node;
     }
 
     public int maxSumBST(TreeNode root) {
         int [] maxSum = new int[]{0};
-        dfs(root, null, maxSum);
+        dfs(root, maxSum);
         return maxSum[0];
     }
 
@@ -70,5 +68,17 @@ public class MaximumSumBSTInBinaryTree_1373 {
         root.right.right.right = new TreeNode(6);
         MaximumSumBSTInBinaryTree_1373 maximumSumBSTInBinaryTree1373 =  new MaximumSumBSTInBinaryTree_1373();
         System.out.println( maximumSumBSTInBinaryTree1373.maxSumBST(root));
+
+
+        TreeNode treeNode = new TreeNode(4);
+        treeNode.left = new TreeNode(3);
+        treeNode.left.left = new TreeNode(1);
+        treeNode.left.right = new TreeNode(2);
+        System.out.println( maximumSumBSTInBinaryTree1373.maxSumBST(treeNode));
+
+
+
+
+
     }
 }
