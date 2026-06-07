@@ -77,8 +77,5 @@ public class MaximumSumBSTInBinaryTree_1373 {
         System.out.println( maximumSumBSTInBinaryTree1373.maxSumBST(treeNode));
 
 
-
-
-
     }
 }
