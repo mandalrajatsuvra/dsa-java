@@ -33,7 +33,7 @@ public class BitonicPointGFG {
     *
     *
     * */
-    // Problem here is we are using bs 2 times the solutions is correct but not Good solution;
+
 
     public int bs(int[] arr) {
 
@@ -60,6 +60,7 @@ public class BitonicPointGFG {
         return -1;
     }
 
+    // Problem here is we are using bs 2 times the solutions is correct but not Good solution;
     public void bs(int []arr, int left, int right, int [] res) {
         if (left > right) {
             return;
