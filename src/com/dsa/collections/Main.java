@@ -1,9 +1,6 @@
 package com.dsa.collections;
 
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.TreeSet;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,6 +43,8 @@ public class Main {
 
         long l = (long) Math.pow(Integer.MAX_VALUE, 2);
         System.out.println(l);
+        Arrays.binarySearch(new int[]{1, 2}, 2);
+
 
 
     }
