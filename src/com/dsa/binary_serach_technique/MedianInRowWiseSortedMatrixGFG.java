@@ -24,19 +24,25 @@ public class MedianInRowWiseSortedMatrixGFG {
         int end = Integer.MIN_VALUE;
         for(int i=0; i< r; i++){
             st = Math.min(st,mat[i][0]);
-        }
-        for(int i=0; i< r; i++){
             end = Math.max(end,mat[i][c-1]);
         }
         while (st < end){
-            int mid = (st+end) >> 1;
-            int noOfElementsLessTanEqualToMid = 0;
+            int mid = st + (end-st)/2;
+            int total = 0;
             for(int i=0; i<mat.length; i++){
-                 noOfElementsLessTanEqualToMid += getNoOfElementsLessThanEqualToMid(mat[i], mid);
+                 total += upperBound(mat[i], mid);
             }
-
-            //[2, 3, 4, 4, 6, 6, 6, 6,6 ,6 6, 7, 7, 9, 10].
-            //1, 2, 3, 3, 5, 6, 6, 9, 9
+            if(total >= (r*c+1)/2){
+                end = mid;
+            }else{
+                st = mid+1;
+            }
+            //[2, 3, 4, 4, 6,
+            // 6, 6, 6,6 ,6
+            // 6, 7, 7, 9, 10].
+            //1, 2, 3,
+            //3, 5, 6,
+            //6, 9, 9
             /*
             * s = 1 e = 9 m = 5   -- 4   <= 4
             * st = 5, e = 9 m =7  --7
@@ -55,43 +61,26 @@ public class MedianInRowWiseSortedMatrixGFG {
             *
             *
             * */
-
             //
-            if(noOfElementsLessTanEqualToMid == r*c/2){
-                return mid;
-            }else if(noOfElementsLessTanEqualToMid < r*c/2){
-                st = mid;
-            }else {
+
+        }
+        return st;
+    }
+
+
+    public int upperBound(int [] arr, int key){
+        int start = 0;
+        int end = arr.length-1;
+        int upperBoundIndex = arr.length;
+        while(start <= end){
+            int mid = start + (end-start)/2;
+            if(arr[mid] > key){
+                upperBoundIndex = mid;
                 end = mid-1;
+            }else{
+                start = mid+1;
             }
         }
-        return end;
+        return upperBoundIndex;
     }
-
-    private int getNoOfElementsLessThanEqualToMid(int [] arr, int k) {
-       int start = 0;
-       int end = arr.length-1;
-       int res = -1;
-
-    /*
-    *
-    *
-    * [2, 3, 4, 4, 6, 6, 6,   6,6 ,6 6, 7, 7, 9, 10].
-    * l =0, r= 14 m = 7
-    * l=0 ,  r = 6 m = 3
-    *
-    * */
-       while(start <= end){
-           int mid = (start+ end) >> 1;
-           if(arr[mid] < k){
-               res = mid;
-               start = mid + 1;
-           }else{
-               end = mid - 1;
-           }
-       }
-       return res + 1;
-    }
-
-
 }
